@@ -356,10 +356,16 @@ class GPBUtil
                 $classname = $namespace . "\\" . $class_name_without_package;
                 $legacy_classname =
                     $namespace . "\\" . $legacy_class_name_without_package;
+                if (!class_exists($classname)) {
+                    $classname = $legacy_classname;
+                }
                 return;
             } else {
                 $classname = $class_name_without_package;
                 $legacy_classname = $legacy_class_name_without_package;
+                if (!class_exists($classname)) {
+                    $classname = $legacy_classname;
+                }
                 return;
             }
         }
@@ -379,6 +385,10 @@ class GPBUtil
             $legacy_classname =
                 implode('\\', array_map('ucwords', explode('.', $package))).
                 "\\".$legacy_class_name_without_package;
+        }
+
+        if (!class_exists($classname)) {
+            $classname = $legacy_classname;
         }
     }
 
